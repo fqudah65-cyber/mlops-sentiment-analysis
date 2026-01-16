@@ -13,7 +13,7 @@ import json
 
 from config.settings import Config
 from api.routes import api_bp
-from models.sentiment_model import SentimentAnalyzer
+from src.models.sentiment_model import SentimentAnalyzer
 from services.auth_service import AuthService
 from utils.validators import validate_input
 
