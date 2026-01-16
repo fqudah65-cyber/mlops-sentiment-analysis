@@ -44,7 +44,13 @@ class SentimentAnalyzer:
             "version": self.version,
             "type": "rule-based"
         }
-# Alias used by API routes
+
+
+# Alias used by API routes (single text)
+    def predict(self, text: str) -> dict:
+        return self.analyze(text)
+
+# Alias used by API routes (batch)
     def predict_batch(self, texts: list) -> list:
         return self.batch_analyze(texts)
 
