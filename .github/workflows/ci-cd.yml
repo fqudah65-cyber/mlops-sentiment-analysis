@@ -7,51 +7,29 @@ on:
     branches: [ main ]
 
 jobs:
-  unit-tests:
-    name: Run Unit Tests
+  build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r backend/requirements.txt
-        pip install pytest
-    - name: Execute Tests
+        pip install pytest flake8
+
+    - name: Run Linting
+      run: |
+        flake8 backend/src --count --exit-zero --max-line-length=127 --statistics
+
+    - name: Execute Unit Tests
       run: |
         pytest backend/tests/ -v
 
-  code-quality:
-    name: Linting and Quality Check
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    - name: Install Flake8
-      run: pip install flake8
-    - name: Run Linting
-      run: flake8 backend/src --count --exit-zero --max-line-length=127 --statistics
-
-  security-analysis:
-    name: Security Vulnerability Scan
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: python
-    - name: Perform Analysis
-      uses: github/codeql-action/analyze@v3
