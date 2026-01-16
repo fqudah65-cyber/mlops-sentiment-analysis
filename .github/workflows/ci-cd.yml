@@ -25,11 +25,11 @@ jobs:
           pip install -r backend/requirements.txt
           pip install pytest pytest-cov
 
-      - name: Run unit tests
+      - name: Run API tests
         env:
           PYTHONPATH: backend
         run: |
-          pytest backend/tests/test_sentiment_model.py -v
+          pytest backend/tests/test_api.py -v
 
       - name: Run API tests
         env:
