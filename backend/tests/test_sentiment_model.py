@@ -9,7 +9,7 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from models.sentiment_model import SentimentAnalyzer
+from src.models.sentiment_model import SentimentAnalyzer
 
 class TestSentimentAnalyzer(unittest.TestCase):
     """Test cases for SentimentAnalyzer class"""
